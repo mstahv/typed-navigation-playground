@@ -38,6 +38,10 @@ public class AnotherView extends VerticalLayout implements HasUrlParameter<Strin
      * somebody shares a link to their colleague.
      * Basically we encode the ComplexThing into url parameters.
      * In a more realistic use case, we would probably use entity id or similar.
+     *
+     * Note, this is optional! Not every app needs perfect deep linking and
+     * implementing it always requires some work.
+     *
      * @param o o
      */
     private void updateQueryParameters(ComplexThing o) {
@@ -49,10 +53,15 @@ public class AnotherView extends VerticalLayout implements HasUrlParameter<Strin
 
     @Override
     public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+        /*
+         * Note, this is optional! Not every app needs perfect deep linking and
+         * implementing it always requires some work.
+         */
         try {
             // If there are proper parameters when navigating to the page, doStuffWith(things);
             // This is the reverse operation of updateQueryParameters method
             location = event.getLocation();
+            // Side note, there would be dramatic improvements we could do for this API
             QueryParameters queryParameters = location.getQueryParameters();
             String string = queryParameters.getParameters().get("string").get(0);
             int integer = Integer.parseInt(queryParameters.getParameters().get("integer").get(0));
