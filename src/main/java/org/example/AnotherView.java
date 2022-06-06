@@ -46,6 +46,7 @@ public class AnotherView extends VerticalLayout implements HasUrlParameter<Strin
      */
     private void updateQueryParameters(ComplexThing o) {
         History history = getUI().get().getPage().getHistory();
+        // Note, could/should use "path parameters" instead of query parameters as well
         history.replaceState(null , location.getPath() + "?string=" + o.getString() + "&integer=" + o.getInteger());
         // a JS haxie solution, don't need to save the location in navigation, might be more stable...
         // getElement().executeJs("setTimeout(() => {window.history.replaceState(null, '', window.location.pathname + '?string=" + o.getString() + "&integer=" + o.getInteger() + "')},0);");
@@ -61,7 +62,9 @@ public class AnotherView extends VerticalLayout implements HasUrlParameter<Strin
             // If there are proper parameters when navigating to the page, doStuffWith(things);
             // This is the reverse operation of updateQueryParameters method
             location = event.getLocation();
+
             // Side note, there would be dramatic improvements we could do for this API
+            // Note, could/should use "path parameters" instead of query parameters as well
             QueryParameters queryParameters = location.getQueryParameters();
             String string = queryParameters.getParameters().get("string").get(0);
             int integer = Integer.parseInt(queryParameters.getParameters().get("integer").get(0));
